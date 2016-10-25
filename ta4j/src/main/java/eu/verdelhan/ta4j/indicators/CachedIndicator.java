@@ -89,7 +89,7 @@ public abstract class CachedIndicator<T> extends AbstractIndicator<T> {
             }
         } else {
             increaseLengthTo(index, maximumResultCount);
-            if (index > highestResultIndex) {
+            if (index >= highestResultIndex) {
                 // Result not calculated yet
                 highestResultIndex = index;
                 result = calculate(index);

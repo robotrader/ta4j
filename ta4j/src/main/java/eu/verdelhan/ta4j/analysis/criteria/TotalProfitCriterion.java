@@ -38,14 +38,14 @@ public class TotalProfitCriterion extends AbstractAnalysisCriterion {
     public double calculate(TimeSeries series, TradingRecord tradingRecord) {
         double value = 1d;
         for (Trade trade : tradingRecord.getTrades()) {
-            value *= calculateProfit(series, trade);
+            value *= calculateProfit(trade);
         }
         return value;
     }
 
     @Override
     public double calculate(TimeSeries series, Trade trade) {
-        return calculateProfit(series, trade);
+        return calculateProfit(trade);
     }
 
     @Override
@@ -59,11 +59,11 @@ public class TotalProfitCriterion extends AbstractAnalysisCriterion {
      * @param trade a trade
      * @return the profit of the trade
      */
-    private double calculateProfit(TimeSeries series, Trade trade) {
+    private double calculateProfit(Trade trade) {
         Decimal profit = Decimal.ONE;
         if (trade.isClosed()) {
-            Decimal exitClosePrice = series.getTick(trade.getExit().getIndex()).getClosePrice();
-            Decimal entryClosePrice = series.getTick(trade.getEntry().getIndex()).getClosePrice();
+            Decimal exitClosePrice = trade.getExit().getPrice();
+            Decimal entryClosePrice = trade.getEntry().getPrice();
 
             if (trade.getEntry().isBuy()) {
                 profit = exitClosePrice.dividedBy(entryClosePrice);

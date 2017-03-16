@@ -103,9 +103,9 @@ public class CashFlow implements Indicator<Decimal> {
         for (int i = Math.max(begin, 1); i <= end; i++) {
             Decimal ratio;
             if (trade.getEntry().isBuy()) {
-                ratio = timeSeries.getTick(i).getClosePrice().dividedBy(timeSeries.getTick(entryIndex).getClosePrice());
+                ratio = timeSeries.getTick(i).getClosePrice().dividedBy(trade.getEntry().getPrice());
             } else {
-                ratio = timeSeries.getTick(entryIndex).getClosePrice().dividedBy(timeSeries.getTick(i).getClosePrice());
+                ratio = trade.getEntry().getPrice().dividedBy(timeSeries.getTick(i).getClosePrice());
             }
             values.add(values.get(entryIndex).multipliedBy(ratio));
         }
